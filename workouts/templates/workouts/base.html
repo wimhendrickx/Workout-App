@@ -1,0 +1,36 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" type="text/css" href="{% static 'workouts/css/bootstrap.css' %}" />
+    <title>{% block header %}My amazing site{% endblock %}</title>
+</head>
+
+<body>
+    <div class="container">
+        <div class="page-header">
+            <h1>Wim Workout Web Site <small>Hoeveel beweeg jij?</small></h1>
+        </div>
+   
+        <div id="sidebar">
+            {% block sidebar %}
+            <div class="navbar">
+                <div class="navbar-inner">
+                    <a class="brand" href="#">Workouts</a>
+                    <ul class="nav">
+                        <li><a href="#">Add workout</a></li>
+                        <li><a href="#">Profile</a></li>
+                        <li><a href="#">Link</a></li>
+                    </ul>
+                </div>
+            </div>
+            {% endblock %}
+        </div>
+    
+        <div id="content">
+            {% block content %}{% endblock %}
+        </div>
+    </div>
+</body>
+</html>
