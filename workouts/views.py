@@ -59,6 +59,8 @@ def add(request):
 def edit(request, id=None, template_name='workouts/edit.html'):
     if id:
         workout = get_object_or_404(Workout, pk=id)
+        print "ik krijg hier nen id binnen"
+        print id
         #if article.user != request.user:
         #    return HttpResponseForbidden()
     else:

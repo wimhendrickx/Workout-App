@@ -1,0 +1,21 @@
+{% extends "workouts/base.html" %}
+
+{% block title %}Workout index{% endblock %}
+
+{% block workout %}Workout index{% endblock %}
+
+{% block content %}
+
+{% if latest_workout_list %}
+    <ul class="list-group">
+    {% for workout in latest_workout_list %}
+        <li class="list-group-item"><a href="{% url 'workouts:detail' workout.id %}">{{ workout.description }}</a> <a class="btn btn-mini" role="button" href="{% url 'workouts:edit' workout.id %}"><i class="icon-edit"></i>edit</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No workouts are available.</p>
+{% endif %}
+
+<a href="{% url 'workouts:add' %}">toevoegen van een workout</a>
+
+{% endblock %}

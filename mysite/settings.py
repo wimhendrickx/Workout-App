@@ -126,6 +126,7 @@ INSTALLED_APPS = (
     'polls',
     'workouts',
     'workouttypes',
+    'athletes',
 )
 
 SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'
@@ -158,3 +159,5 @@ LOGGING = {
         },
     }
 }
+
+AUTH_PROFILE_MODULE = 'athletes.Athlete'
