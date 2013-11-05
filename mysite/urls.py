@@ -15,5 +15,6 @@ urlpatterns = patterns('',
     # Uncomment the next line to enable the admin:
     url(r'^polls/', include('polls.urls', namespace="polls")),
     url(r'^workouts/', include('workouts.urls', namespace="workouts")),
+    url(r'^athletes/', include('athletes.urls', namespace="athletes")),
     url(r'^admin/', include(admin.site.urls)),
 )

@@ -10,7 +10,7 @@
     {{field.error}}
 {% endfor %}
 
-<form action="" method="post"> 
+<form action="/athlete/edit/" method="post"> 
     {% csrf_token %}
     {{form.as_ul}}
 
