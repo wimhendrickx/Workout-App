@@ -6,6 +6,13 @@
 
 {% block content %}
 
+<h2> Recent distances </h2>
+
+<ul class="list-group">
+  {% for month in months %}
+    <li class="list-group-item">{{month.name}}: {{month.total_distance}}</li>
+  {% endfor %}
+</ul>
 {% if latest_workout_list %}
     <ul class="list-group">
     {% for workout in latest_workout_list %}

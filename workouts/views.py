@@ -10,12 +10,15 @@ from django.http import Http404, HttpResponseRedirect
 #from django.httpresponse import httpresponseredirect
 
 from workouts.models import Workout
+from workouts.models import WorkoutsManager
 from workouttypes.models import WorkoutType
 from workouts.forms import WorkoutForm
 
 def index(request):
     latest_workout_list = Workout.objects.all().order_by('-date')[:30]
-    context = {'latest_workout_list': latest_workout_list}
+    wmanager = WorkoutsManager()
+    months = wmanager.get_total_distances_aggregated_by_month()
+    context = {'latest_workout_list': latest_workout_list, 'months': months}
     return render(request, 'workouts/index.html', context)
     
 def detail(request, workout_id):
@@ -57,10 +60,11 @@ def add(request):
     return render_to_response('workouts/add.html', {'form': form}, context)
     
 def edit(request, id=None, template_name='workouts/edit.html'):
-    if id:
+    workout = None
+    if id!=None:
         workout = get_object_or_404(Workout, pk=id)
-        print "ik krijg hier nen id binnen"
-        print id
+        print "ik krijg hier nen id binnen: {0}".format(id)
+	print "voorvoor ik heb het object met id {0} opgehaald".format(workout.id)
         #if article.user != request.user:
         #    return HttpResponseForbidden()
     else:
@@ -69,14 +73,16 @@ def edit(request, id=None, template_name='workouts/edit.html'):
     if request.POST:
         form = WorkoutForm(request.POST, instance=workout)
         if form.is_valid():
-            print "hier ben ik nu"
+	    print "achterachter ik heb het object met id {0} opgehaald".format(workout.id)
+            print "hier ben ik nu: en ik ben bezig met instance: {0}".format(form.instance.id)
+	    print "is de form bound?: {0}".format(form.is_bound)
             print workout
             form.save()
             # messages.add_message(request, messages.SUCCESS, _('Workout correctly saved.'))
             # If the save was successful, redirect to another page
             
             #redirect_url = reverse('index')
-            return HttpResponseRedirect('../')
+            return HttpResponseRedirect('../../')
             #return index(request)
     else:
         form = WorkoutForm(instance=workout)
