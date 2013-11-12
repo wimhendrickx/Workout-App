@@ -27,3 +27,6 @@ class WorkoutsManager(models.Model):
 	distance_curr_month = Workout.objects.filter(date__year=current_year).filter(date__month=current_month).aggregate(Sum('distance'))['distance__sum']
 	distance_prev_month = Workout.objects.filter(date__year=current_year).filter(date__month=last_month).aggregate(Sum('distance'))['distance__sum']
         return [{'name': str(current_month) + ' ({0})'.format(current_year), 'total_distance': distance_curr_month}, {'name': str(last_month) + ' ({0})'.format(current_year), 'total_distance': distance_prev_month}]
+
+class AmountOfDistancebyType(models.Model):
+    pass

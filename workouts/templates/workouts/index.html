@@ -1,10 +1,28 @@
 {% extends "workouts/base.html" %}
 
+{% load staticfiles %}
+
+{% block javascript %}
+    <!-- code to include the highcharts and jQuery libraries goes here -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js" type="text/javascript" data-rocketoptimized="true"></script>
+    <script src="{{ STATIC_URL }}workouts/js/highcharts/js/highcharts.js" type="text/javascript" data-rocketoptimized="true"></script>
+    <script src="{{ STATIC_URL }}workouts/js/highcharts/js/themes/gray.js" type="text/javascript" data-rocketoptimized="true"></script>
+    <script src="{{ STATIC_URL }}workouts/js/chartit/chartloader.js" type="text/javascript" data-rocketoptimized="true"></script>
+    <!-- load_charts filter takes a comma-separated list of id's where -->
+    <!-- the charts need to be rendered to                             -->
+    {% load chartit %}
+    {{ workoutchart|load_charts:"container" }}
+{% endblock %}
+
 {% block title %}Workout index{% endblock %}
 
 {% block workout %}Workout index{% endblock %}
 
 {% block content %}
+
+<h2> Chart </h2>
+
+<div id='container'>{{ workoutchart|load_charts:"container"}}</div>
 
 <h2> Recent distances </h2>
 
@@ -13,6 +31,9 @@
     <li class="list-group-item">{{month.name}}: {{month.total_distance}}</li>
   {% endfor %}
 </ul>
+
+
+
 {% if latest_workout_list %}
     <ul class="list-group">
     {% for workout in latest_workout_list %}

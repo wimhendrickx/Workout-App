@@ -127,6 +127,7 @@ INSTALLED_APPS = (
     'workouts',
     'workouttypes',
     'athletes',
+    'chartit',
 )
 
 SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'

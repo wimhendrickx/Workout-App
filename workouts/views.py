@@ -14,11 +14,50 @@ from workouts.models import WorkoutsManager
 from workouttypes.models import WorkoutType
 from workouts.forms import WorkoutForm
 
+from chartit import DataPool, Chart
+
 def index(request):
+    
+    #Step 1: Create a DataPool with the data we want to retrieve.
+    workoutdata = \
+        DataPool(
+           series=
+            [{'options': 
+                {
+                    'source': Workout.objects.all()},
+                    'terms': 
+                    [
+                        'type__name',
+                        'distance',
+                        # 'boston_temp' we can add other vars
+                    ]
+                }
+            ])
+    
+    #Step 2: Create the Chart object
+    cht = Chart(
+            datasource = workoutdata,
+            series_options =
+              [{'options':{
+                  'type': 'column',
+                  'stacking': False},
+                'terms':{
+                  'type__name': [    #we sort per month
+                    'distance',
+                    #'houston_temp'
+                ]
+                  }}],
+            chart_options =
+              {'title': {
+                   'text': 'Hoeveel afstand per type'},
+               'xAxis': {
+                    'title': {
+                       'text': 'Type'}}})
+    
     latest_workout_list = Workout.objects.all().order_by('-date')[:30]
     wmanager = WorkoutsManager()
     months = wmanager.get_total_distances_aggregated_by_month()
-    context = {'latest_workout_list': latest_workout_list, 'months': months}
+    context = {'latest_workout_list': latest_workout_list, 'months': months, 'workoutchart': cht}
     return render(request, 'workouts/index.html', context)
     
 def detail(request, workout_id):
