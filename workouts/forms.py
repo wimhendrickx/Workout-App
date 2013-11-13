@@ -6,8 +6,11 @@ from django.db import models
 class WorkoutForm(ModelForm):
     description = forms.CharField(max_length=128, help_text="Please enter the description.")
     distance = forms.CharField(max_length=128, help_text="Please enter the distance.")
-    date = forms.DateField(help_text="Wanneer heb je de training uitgevoerd?")
-    #type
+    date = forms.DateField(widget=forms.TextInput(attrs=
+                                {
+                                    'id':'datepicker'
+                                }))
+                            
     class Meta:
         model = Workout
         fields = ['description', 'distance', 'type', 'date','duration']

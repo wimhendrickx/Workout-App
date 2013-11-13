@@ -14,39 +14,35 @@ from workouts.models import WorkoutsManager
 from workouttypes.models import WorkoutType
 from workouts.forms import WorkoutForm
 
-from chartit import DataPool, Chart
+from chartit import DataPool, Chart, PivotDataPool, PivotChart
 
 def index(request):
     
     #Step 1: Create a DataPool with the data we want to retrieve.
     workoutdata = \
-        DataPool(
+        PivotDataPool(
            series=
-            [{'options': 
+            [{  'options': 
                 {
-                    'source': Workout.objects.all()},
-                    'terms': 
-                    [
-                        'type__name',
-                        'distance',
-                        # 'boston_temp' we can add other vars
-                    ]
+                    'source': Workout.objects.all(),
+                    'categories': ['type__name'],
+                },         
+                'terms': 
+                {
+                    'total_distance' : Sum('distance')
                 }
+            }
             ])
     
     #Step 2: Create the Chart object
-    cht = Chart(
+    cht = PivotChart(
             datasource = workoutdata,
             series_options =
               [{'options':{
                   'type': 'column',
                   'stacking': False},
-                'terms':{
-                  'type__name': [    #we sort per month
-                    'distance',
-                    #'houston_temp'
-                ]
-                  }}],
+                'terms': ['total_distance']   
+                  }],
             chart_options =
               {'title': {
                    'text': 'Hoeveel afstand per type'},
