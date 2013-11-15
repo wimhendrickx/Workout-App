@@ -1,5 +1,9 @@
-<head>
-g
+{% extends "workouts/base.html" %}
+
+{% load staticfiles %}
+
+{% block javascript %}
+
 <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.0/themes/base/jquery-ui.css" />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js" type="text/javascript" data-rocketoptimized="true"></script>
 <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
@@ -15,9 +19,16 @@ g
 
     });
   });
-  </script>
-</head>
-<body>
+</script>
+  
+{% endblock %}
+
+{% block title %}Workout toevoegen{% endblock %}
+
+{% block workout %}Workout toevoegen{% endblock %}
+
+{% block content %}
+
 <h1>Workout toevoegen/wijzigen</h1>
 
 {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
@@ -28,3 +39,5 @@ g
 <input type="submit" value="Submit" />
 </form>
 <body>
+
+{% endblock %}
